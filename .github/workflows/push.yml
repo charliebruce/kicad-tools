@@ -1,0 +1,15 @@
+on: push
+name: Build Docker Image
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@master
+      with: 
+        submodules: true
+    - name: Login to GitHub Package Registry
+      run: docker login docker.pkg.github.com -u $GITHUB_ACTOR -p ${{ secrets.GITHUB_TOKEN }}
+    - name: Build Image
+      run: make
